@@ -1,4 +1,6 @@
-# Flipdots code in Go
+# Flipdots in Go
+
+This library handles controlling [Flip-Dot Boards by Alfa-Zeta](https://flipdots.com/en/products-services/flip-dot-boards-xy5/) from Go. It should work on Mac, Linux, and Windows, but has been primarily tested on Mac with a 7x7 USB panel.
 
 ## Simple example:
 
