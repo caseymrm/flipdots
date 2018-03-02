@@ -1,11 +1,8 @@
-# Flipdots code in Go
-
-## Simple example:
-
-```golang
 package main
 
 import (
+	"flag"
+	"log"
 	"math/rand"
 	"time"
 
@@ -13,8 +10,14 @@ import (
 )
 
 func main() {
-	p := panel.NewPanel(7, 7, "/dev/tty.usbserial-A505J9SE", 9600)
-    defer p.Close()
+	width := flag.Int("w", 7, "width of panel")
+	height := flag.Int("h", 7, "width of panel")
+	port := flag.String("p", "/dev/tty.usbserial-A505J9SE", "the serial port")
+	baud := flag.Int("b", 9600, "baud rate of port")
+	flag.Parse()
+
+	p := panel.NewPanel(*width, *height, *port, *baud)
+	defer p.Close()
 
 	for i := 0; i < 20; i++ {
 		for x := 0; x < p.Width; x++ {
@@ -27,4 +30,3 @@ func main() {
 		time.Sleep(200 * time.Millisecond)
 	}
 }
-```

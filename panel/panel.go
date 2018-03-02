@@ -1,4 +1,4 @@
-package Panel
+package panel
 
 import (
 	"image/color"
@@ -55,7 +55,6 @@ func (p *Panel) Send() {
 			d = d<<1 | int(p.GetInt(x, y))
 		}
 		data[x] = byte(d)
-		log.Printf("%d: %08b", x, d)
 	}
 	p.sendData(p.Address, data, true)
 }
@@ -102,9 +101,7 @@ func (p *Panel) sendData(address, data []byte, refresh bool) {
 	message = append(message, data...)
 	message = append(message, 0x8f)
 
-	log.Printf("Sending: %x", message)
 	n, err := p.Port.Write(message)
-	log.Printf("Sent: %d", n)
 	if err != nil {
 		log.Fatal(err)
 	}
