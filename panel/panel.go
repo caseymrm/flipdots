@@ -171,8 +171,8 @@ func (p *Panel) Set(x, y int, state bool) {
 	p.State[x][y] = state
 }
 
-// SetAll the dots on or off
-func (p *Panel) SetAll(state bool) {
+// Clear the dots on or off
+func (p *Panel) Clear(state bool) {
 	for x := 0; x < p.Width; x++ {
 		for y := 0; y < p.Height; y++ {
 			p.Set(x, y, state)

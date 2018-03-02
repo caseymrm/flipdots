@@ -81,7 +81,13 @@ func (f *Font) Draw(panel *panel.Panel, panelX, panelY int, text string) {
 		pattern, ok := f.charMap[Character(c)]
 		if ok {
 			for x := 0; x < f.Width; x++ {
+				if panelX+x < 0 || panelX+x >= panel.Width {
+					continue
+				}
 				for y := 0; y < f.Height; y++ {
+					if panelY+y < 0 || panelY+y >= panel.Height {
+						continue
+					}
 					panel.Set(panelX+x, panelY+y, pattern[x][y])
 				}
 			}

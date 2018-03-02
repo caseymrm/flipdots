@@ -20,9 +20,19 @@ func main() {
 
 	f := text.GetFont()
 	str := "Hello world"
+
+	// Flash consecutively
 	for i := 0; i < len(str); i++ {
 		f.Draw(p, 0, 0, string(str[i]))
 		p.Send()
 		time.Sleep(200 * time.Millisecond)
+	}
+
+	// Scroll
+	for i := 0; i < (len(str)-1)*(f.Width+1); i += 1 {
+		p.Clear(false)
+		f.Draw(p, -i, 0, str)
+		p.Send()
+		time.Sleep(100 * time.Millisecond)
 	}
 }
