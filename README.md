@@ -28,3 +28,5 @@ func main() {
     }
 }
 ```
+
+![Output](https://github.com/caseymrm/flipdots/raw/master/static/simple.gif)
