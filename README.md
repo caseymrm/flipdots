@@ -31,6 +31,8 @@ func main() {
 }
 ```
 
+![Output](https://github.com/caseymrm/flipdots/raw/master/static/simple.gif)
+
 ## Letter drawing:
 
 ```golang
@@ -57,4 +59,3 @@ func main() {
 	}
 }
 ```
-![Output](https://github.com/caseymrm/flipdots/raw/master/static/simple.gif)
