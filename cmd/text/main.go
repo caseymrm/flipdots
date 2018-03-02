@@ -29,7 +29,7 @@ func main() {
 	}
 
 	// Scroll
-	for i := 0; i < (len(str)-1)*(f.Width+1); i += 1 {
+	for i := 0; i < (len(str)-1)*(f.Width+1); i++ {
 		p.Clear(false)
 		f.Draw(p, -i, 0, str)
 		p.Send()
