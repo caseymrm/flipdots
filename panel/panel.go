@@ -30,6 +30,10 @@ func NewPanel(w, h int, portName string, portBaud int) *Panel {
 		panel.State[i] = make([]bool, h)
 	}
 
+	if portName == "" || portBaud == 0 {
+		log.Printf("Running in debug mode, with no panel connection")
+		return panel
+	}
 	var err error
 	panel.Port, err = serial.OpenPort(&serial.Config{Name: portName, Baud: portBaud})
 	if err != nil {
@@ -40,7 +44,10 @@ func NewPanel(w, h int, portName string, portBaud int) *Panel {
 
 // Close the serial port
 func (p *Panel) Close() {
-	p.Port.Close()
+	if p.Port != nil {
+		p.Port.Close()
+	}
+	p.Port = nil
 }
 
 // Send the state of the board to the associated flip dot panel
@@ -57,6 +64,20 @@ func (p *Panel) Send() {
 		data[x] = byte(d)
 	}
 	p.sendData(p.Address, data, true)
+}
+
+func (p *Panel) PrintState() {
+	for y := 0; y < p.Height; y++ {
+		line := ""
+		for x := 0; x < p.Width; x++ {
+			if p.Get(x, y) {
+				line += "O"
+			} else {
+				line += " "
+			}
+		}
+		log.Println(line)
+	}
 }
 
 func (p *Panel) sendData(address, data []byte, refresh bool) {
@@ -101,6 +122,12 @@ func (p *Panel) sendData(address, data []byte, refresh bool) {
 	message = append(message, data...)
 	message = append(message, 0x8f)
 
+	if p.Port == nil {
+		log.Printf("Message: %x", message)
+		p.PrintState()
+		return
+	}
+
 	n, err := p.Port.Write(message)
 	if err != nil {
 		log.Fatal(err)
@@ -133,6 +160,14 @@ func (p *Panel) Color(x, y int) color.RGBA {
 
 // Set the given coordinate dot on or off
 func (p *Panel) Set(x, y int, state bool) {
+	if x < 0 || x >= p.Width {
+		log.Printf("WARNING: Skipping Set() with x %d out of range [0, %d)", x, p.Width)
+		return
+	}
+	if y < 0 || y >= p.Height {
+		log.Printf("WARNING: Skipping Set() with y %d out of range [0, %d)", x, p.Height)
+		return
+	}
 	p.State[x][y] = state
 }
 

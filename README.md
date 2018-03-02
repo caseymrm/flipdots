@@ -31,4 +31,30 @@ func main() {
 }
 ```
 
+## Letter drawing:
+
+```golang
+package main
+
+import (
+	"flag"
+	"time"
+
+	"github.com/caseymrm/flipdots/panel"
+	"github.com/caseymrm/flipdots/text"
+)
+
+func main() {
+    p := panel.NewPanel(7, 7, "/dev/tty.usbserial-A505J9SE", 9600)
+	defer p.Close()
+
+	f := text.GetFont()
+	str := "Hello world"
+	for i := 0; i < len(str); i++ {
+		f.Draw(p, 0, 0, string(str[i]))
+		p.Send()
+		time.Sleep(200 * time.Millisecond)
+	}
+}
+```
 ![Output](https://github.com/caseymrm/flipdots/raw/master/static/simple.gif)
