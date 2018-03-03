@@ -23,7 +23,7 @@ func main() {
 
 	// Flash consecutively
 	for i := 0; i < len(str); i++ {
-		f.Draw(p, 0, 0, string(str[i]))
+		f.Draw(p, 1, 0, string(str[i]))
 		p.Send()
 		time.Sleep(200 * time.Millisecond)
 	}
@@ -35,4 +35,6 @@ func main() {
 		p.Send()
 		time.Sleep(100 * time.Millisecond)
 	}
+	p.Clear(false)
+	p.Send()
 }
