@@ -50,7 +50,7 @@ func main() {
     p := panel.NewPanel(7, 7, "/dev/tty.usbserial-A505J9SE", 9600)
 	defer p.Close()
 
-	f := text.GetFont()
+	f := text.GetFont(7)
 	str := "Hello world"
 	for i := 0; i < len(str); i++ {
 		f.Draw(p, 0, 0, string(str[i]))

@@ -27,10 +27,20 @@ type Font struct {
 var theFont *Font
 
 // GetFont TODO: multiple size options
-func GetFont() *Font {
+func GetFont(height int) *Font {
 	if theFont == nil {
+		var fontJSON []byte
+		switch height {
+		case 3:
+			fontJSON = getCase3JSON()
+		default:
+			log.Printf("Warning, no font with height %d, using 7", height)
+			fallthrough
+		case 7:
+			fontJSON = getVictorJSON()
+		}
 		var font Font
-		err := json.Unmarshal(getVictorJSON(), &font)
+		err := json.Unmarshal(fontJSON, &font)
 		if err != nil {
 			log.Fatalf("Loading font: %v", err)
 		}

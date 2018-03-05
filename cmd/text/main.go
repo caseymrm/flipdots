@@ -18,7 +18,7 @@ func main() {
 	p := panel.NewPanel(*width, *height, *port, *baud)
 	defer p.Close()
 
-	f := text.GetFont()
+	f := text.GetFont(7)
 	str := "Hello world"
 
 	// Flash consecutively
