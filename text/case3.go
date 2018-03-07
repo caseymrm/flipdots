@@ -352,7 +352,7 @@ func getCase3JSON() []byte {
 			]
 		},
 		{
-			"Character": "\",
+			"Character": "\\",
 			"Bitmap": [
 				"0--",
 				"-0-",
