@@ -104,6 +104,12 @@ func (p *Panel) sendData(address, data []byte, refresh bool) {
 		} else {
 			command = 0x84
 		}
+	case 14:
+		if refresh {
+			command = 0x92
+		} else {
+			command = 0x93
+		}
 	case 7:
 		if refresh {
 			command = 0x87
