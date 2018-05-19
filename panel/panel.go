@@ -52,9 +52,6 @@ func (p *Panel) Close() {
 
 // Send the state of the board to the associated flip dot panel
 func (p *Panel) Send() {
-	if p.Height != 7 {
-		log.Fatalf("TODO: Write code to handle height %d", p.Height)
-	}
 	data := make([]byte, p.Width)
 	for x := 0; x < p.Width; x++ {
 		d := 0
