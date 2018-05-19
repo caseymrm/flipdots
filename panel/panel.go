@@ -71,9 +71,9 @@ func (p *Panel) PrintState() {
 		line := ""
 		for x := 0; x < p.Width; x++ {
 			if p.Get(x, y) {
-				line += "O"
+				line += "⚫️"
 			} else {
-				line += " "
+				line += "⚪️"
 			}
 		}
 		log.Println(line)
