@@ -50,8 +50,17 @@ func (p *Panel) Close() {
 	p.Port = nil
 }
 
-// Send the state of the board to the associated flip dot panel
+// Send the state of the board to the associated flip dot panel and refresh
 func (p *Panel) Send() {
+	p.sendBoard(true)
+}
+
+// Queue the state of the board to the panel, show when Refresh() is called (used for multiple panels)
+func (p *Panel) Queue() {
+	p.sendBoard(false)
+}
+
+func (p *Panel) sendBoard(refresh bool) {
 	data := make([]byte, p.Width)
 	for x := 0; x < p.Width; x++ {
 		d := 0
@@ -60,7 +69,12 @@ func (p *Panel) Send() {
 		}
 		data[x] = byte(d)
 	}
-	p.sendData(p.Address, data, true)
+	p.sendData(p.Address, data, refresh)
+}
+
+// Refresh causes any queued state to be displayed
+func (p *Panel) Refresh() {
+	p.sendData(nil, nil, true)
 }
 
 func (p *Panel) PrintState() {
@@ -80,6 +94,9 @@ func (p *Panel) PrintState() {
 func (p *Panel) sendData(address, data []byte, refresh bool) {
 	if address == nil {
 		address = []byte{0xff}
+	}
+	if data == nil {
+		data = []byte{}
 	}
 	command := byte(0)
 	switch len(data) {
